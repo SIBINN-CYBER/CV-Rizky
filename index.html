@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda - CV Rizky Setiawan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #00bfa5; /* Teal accent */
+            
+            /* Dark Mode (Default) */
+            --background-color-dark: #121212;
+            --surface-color-dark: #1e1e1e;
+            --text-color-dark: #e0e0e0;
+            --text-secondary-color-dark: #a0a0a0;
+
+            /* Light Mode */
+            --background-color-light: #f4f4f9;
+            --surface-color-light: #ffffff;
+            --text-color-light: #1c1c1e;
+            --text-secondary-color-light: #555555;
+
+            --sidebar-width: 250px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color-dark);
+            color: var(--text-color-dark);
+            display: flex;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+
+        body.light-mode {
+            background-color: var(--background-color-light);
+            color: var(--text-color-light);
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--surface-color-dark);
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 1.5rem 0;
+            border-right: 1px solid #2a2a2a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        body.light-mode .sidebar {
+            background-color: var(--surface-color-light);
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .sidebar-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .sidebar-profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .home-page .sidebar-profile-pic {
+            display: none; /* Hide on homepage */
+        }
+
+        .sidebar-header h3 {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            color: var(--text-secondary-color-dark);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        body.light-mode .sidebar ul li a {
+            color: var(--text-secondary-color-light);
+        }
+
+        .sidebar ul li a:hover {
+            background-color: rgba(0, 191, 165, 0.1);
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: calc(2rem - 4px);
+        }
+
+        .sidebar ul li a.active {
+            color: var(--primary-color);
+            font-weight: 600;
+            border-left: 4px solid var(--primary-color);
+            padding-left: calc(2rem - 4px);
+        }
+
+        .theme-switcher-container {
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        .theme-switcher {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .theme-switcher input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .content {
+            margin-left: var(--sidebar-width);
+            padding: 3rem;
+            width: calc(100% - var(--sidebar-width));
+            animation: fadeIn 0.8s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-secondary-color-dark);
+            min-height: 2rem;
+        }
+
+        body.light-mode .hero p {
+            color: var(--text-secondary-color-light);
+        }
+
+        .profile-pic-container {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-pic-frame {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: var(--surface-color-dark);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-pic-frame:hover {
+            transform: scale(1.05);
+        }
+
+        body.light-mode .profile-pic-frame {
+            background-color: var(--surface-color-light);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #typing-effect {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem 0;
+            }
+            
+            .content {
+                margin-left: 0;
+                width: 100%;
+                padding: 2rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .profile-pic-frame {
+                width: 180px;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body class="home-page">
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="Foto Profil" class="sidebar-profile-pic">
+            <h3>CV Digital</h3>
+        </div>
+        <ul>
+            <li><a href="index.html" class="active">Beranda</a></li>
+            <li><a href="tentang.html">Tentang Saya</a></li>
+            <li><a href="pendidikan.html">Pendidikan</a></li>
+            <li><a href="pengalaman.html">Pengalaman</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+        </ul>
+        <div class="theme-switcher-container">
+            <label class="theme-switcher">
+                <input type="checkbox" id="theme-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </nav>
+    <main class="content">
+        <header class="hero">
+            <div class="profile-pic-container">
+                <div class="profile-pic-frame">
+                    <img src="foto.jpeg" alt="Foto Profil Rizky Setiawan" class="profile-pic">
+                </div>
+            </div>
+            <h1>Rizky Setiawan</h1>
+            <p><span id="typing-effect"></span></p>
+        </header>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Theme Switcher --- //
+            const themeSwitch = document.getElementById('theme-switch');
+            const body = document.body;
+
+            // Function to apply theme from localStorage
+            const applyTheme = () => {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'light') {
+                    body.classList.add('light-mode');
+                    themeSwitch.checked = true;
+                } else {
+                    body.classList.remove('light-mode');
+                    themeSwitch.checked = false;
+                }
+            };
+
+            // Event listener for the theme switch
+            themeSwitch.addEventListener('change', () => {
+                if (themeSwitch.checked) {
+                    body.classList.add('light-mode');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    body.classList.remove('light-mode');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            // Apply theme on initial load
+            applyTheme();
+
+            // --- Typing Effect --- //
+            const typingElement = document.getElementById('typing-effect');
+            if (typingElement) {
+                const words = ["Web Developer", "Desainer Grafis", "Mahasiswa", "Pecinta Teknologi"];
+                let wordIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+
+                function type() {
+                    const currentWord = words[wordIndex];
+                    if (isDeleting) {
+                        typingElement.textContent = currentWord.substring(0, charIndex - 1);
+                        charIndex--;
+                    } else {
+                        typingElement.textContent = currentWord.substring(0, charIndex + 1);
+                        charIndex++;
+                    }
+
+                    if (!isDeleting && charIndex === currentWord.length) {
+                        setTimeout(() => isDeleting = true, 2000);
+                    } else if (isDeleting && charIndex === 0) {
+                        isDeleting = false;
+                        wordIndex = (wordIndex + 1) % words.length;
+                    }
+                    
+                    const typingSpeed = isDeleting ? 100 : 200;
+                    setTimeout(type, typingSpeed);
+                }
+
+                type();
+            }
+        });
+    </script>
+</body>
+</html
